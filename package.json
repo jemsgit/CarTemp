@@ -1,0 +1,39 @@
+{
+  "name": "com.example.cartemp",
+  "displayName": "CarTemp",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cordova-android": "^8.1.0",
+    "cordova-plugin-bluetooth-serial": "^0.4.7",
+    "cordova-plugin-webpack": "^0.4.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "cordova-plugin-whitelist": "^1.3.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-webpack": {},
+      "cordova-plugin-bluetooth-serial": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}
