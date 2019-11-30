@@ -1,0 +1,74 @@
+#app {
+    background: black;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.device-list__item {
+    background: white;
+    padding: 15px;
+    border: 1px green solid;
+    border-radius: 3px;
+    margin-top: 2px;
+}
+
+.device-list__title {
+    display: inline-block;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.device-list ul {
+    padding-left: 0;
+}
+
+.content__button {
+    width: 100%;
+    padding: 10px;
+    display: block;
+    font-size: 15px;
+}
+
+.content__main {
+    font-size: 40px;
+    text-align: center;
+    color: white;
+}
+
+.debug {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 120px;
+    color: green;
+    overflow: auto;
+    white-space: pre-line;
+}
+
+.debug-form {
+    position: absolute;
+    width: 100%;
+}
+
+.refresh-link {
+    float: right;
+    font-size: 16px;
+}
+
+.custom-command {
+    height: 30px;
+    background: black;
+    color: green;
+    width: 100%;
+    border: 1px green solid;
+    font-size: 20px;
+}
+
+
+
