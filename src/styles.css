@@ -23,6 +23,11 @@
     text-align: center;
 }
 
+.device-list {
+    max-height: calc(100% - 120px);
+    overflow-y: auto;
+}
+
 .device-list ul {
     padding-left: 0;
 }
@@ -47,13 +52,31 @@
     bottom: 0;
     height: 120px;
     color: green;
-    overflow: auto;
-    white-space: pre-line;
 }
+
+.debug p { 
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30;
+    height: 90px;
+    overflow: auto;
+    display: block;
+    white-space: pre-line;
+    overflow-anchor: none;
+}
+
+.debug p:after {
+    content: '';
+    display: block;
+    overflow-anchor: auto;
+    height: 1px;
+  }
 
 .debug-form {
     position: absolute;
     width: 100%;
+    bottom: 0;
 }
 
 .refresh-link {

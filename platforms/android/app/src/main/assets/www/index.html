@@ -35,7 +35,9 @@
                 
             </div>
             <div class="debug">
-                {{ debug }}
+                <p>
+                    {{ debug }}
+                </p>
                 <form v-on:submit.prevent="sendCustomCommand" class="debug-form">
                     <input type="text" v-model="customCommand" class="custom-command"/>
                 </form>
