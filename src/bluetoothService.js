@@ -3,7 +3,8 @@ class BluetoothService {
         this.deviceId = null;
         this.incomingMessage = null;
         this.error = null;
-        this.debug = () => {}
+        this.regex = /([0-9A-Z]{2}\s[0-9A-Z]{2}\s[0-9A-Z]{2})/g;
+        this.debug = () => {};
     }
 
     async getDevices() {
@@ -40,14 +41,11 @@ class BluetoothService {
         this.listen();
         await this.sendData('ATZ');
         answer = await this.getAnswer();
-        this.debug('got answer ATZ: ' + answer);
         await this.sendData('ATSP0');
         answer = await this.getAnswer();
-        this.debug('got answer ATSP0: ' + answer);
         await this.sendData('0100');
         answer = await this.getAnswer();
-        this.debug('got answer 0100');
-        while(answer.includes('SEARCHING')) {
+        while(!answer.match(this.regex)) {
             answer = await this.getAnswer();
         }
     }
@@ -55,8 +53,9 @@ class BluetoothService {
     async getTemperature() {
         await this.sendData('0105');
         let temp = await this.getAnswer();
-        temp = temp.split(' ');
-        return temp[temp.length - 1];
+        temp = temp.replace('0105', '');
+        temp = temp.replace('>', '');
+        return temp.trim();
     }
 
     async sendData(data) {
@@ -65,16 +64,11 @@ class BluetoothService {
     }
 
     listen() {
-        let promise = this.promisify(bluetoothSerial.subscribe.bind(bluetoothSerial, '>'));
-        promise.then((data) => {
-            console.log(data);
+        bluetoothSerial.subscribe('>', (data) => {
             this.debug('listen ' + data);
+            console.log(data);
             this.incomingMessage = data;
-        })
-        .catch((e) => {
-            this.debug('error listen ' + e);
-            this.error = e;
-        })
+        }, () => {console.log('error')});
     }
 
     async getAnswer() {

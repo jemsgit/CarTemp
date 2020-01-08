@@ -21,6 +21,8 @@ var cordovaApp = {
   
   cordovaApp.initialize();
 
+let intevalId = null;
+
 function createVueApp() {
     let vueApp = new Vue({
         el: '#app',
@@ -37,15 +39,12 @@ function createVueApp() {
         methods: {
             getDeviceList: async function() {
                 try{
-                    this.updateLog('get device list')
                     this.devices = [];
                     let devices = await bluetoothService.getDevices();
-                    console.log(devices);
-                    this.devices = devices
+                    this.devices = devices;
                 } catch(e) {
-                    console.log(e)
+                    console.log(e);
                 }
-                
             },
             selectDevice: async function(device) {
                 try{
@@ -57,34 +56,42 @@ function createVueApp() {
                         this.showList = false;
                         this.showContent = true;
                         await bluetoothService.initElm();
-                        this.updateLog('elm inited')
-                        this.temp = bluetoothService.getTemperature();
+                        this.updateLog('elm inited');
+                        this.startMonitoring();
                     } else {
-                        this.updateLog('connect failed')
+                        this.updateLog('connect failed');
                     }
                 } catch(e) {
-                    this.updateLog('connect failed')
-                    console.log(e)
+                    this.updateLog('connect failed');
+                    console.log(e);
                 }
+            },
+            startMonitoring: function() {
+                intevalId = setInterval(async () => {
+                    this.temp = await bluetoothService.getTemperature();
+                }, 2000);
+            },
+            stopMonitoring: function() {
+                clearInterval(intevalId);
             },
             disconnect: async function() {
                 try{
+                    this.stopMonitoring();
                     await bluetoothService.disconnect();
-                    this.updateLog('disconnected')
+                    this.updateLog('disconnected');
                     this.showList = true;
                     this.showContent = false;
                 } catch(e) {
-                    this.updateLog('err disconnect')
+                    this.updateLog('err disconnect');
                     console.log(e)
                 }
             },
             onRefresh: function() {
-                this.updateLog('refresh')
+                this.updateLog('refresh');
                 if(this.showList) {
                     this.getDeviceList();
                 }
             },
-
             setBTDebug: function() {
                 bluetoothService.setDebug(this.updateLog.bind(this))
             },
