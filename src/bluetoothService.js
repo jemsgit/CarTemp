@@ -2,6 +2,7 @@ class BluetoothService {
     constructor() {
         this.deviceId = null;
         this.incomingMessage = null;
+        this.error = null;
         this.debug = () => {}
     }
 
@@ -25,8 +26,8 @@ class BluetoothService {
     }
 
     async disconnect() {
-        await this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
         await this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
+        await this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
         this.deviceId = null;
     }
 
@@ -39,12 +40,10 @@ class BluetoothService {
         this.listen();
         await this.sendData('ATZ');
         answer = await this.getAnswer();
-        this.debug('got answer ATZ');
-        this.debug(answer);
+        this.debug('got answer ATZ: ' + answer);
         await this.sendData('ATSP0');
         answer = await this.getAnswer();
-        this.debug('got answer ATSP0');
-        this.debug(answer);
+        this.debug('got answer ATSP0: ' + answer);
         await this.sendData('0100');
         answer = await this.getAnswer();
         this.debug('got answer 0100');
@@ -61,16 +60,20 @@ class BluetoothService {
     }
 
     async sendData(data) {
-        this.debug('>>' + data);
+        this.debug('>' + data + '\r\n');
         return await this.promisify(bluetoothSerial.write.bind(bluetoothSerial, data + '\r\n'));
     }
 
     listen() {
-        let promise = this.promisify(bluetoothSerial.subscribe.bind(bluetoothSerial, '\n'));
+        let promise = this.promisify(bluetoothSerial.subscribe.bind(bluetoothSerial, '>'));
         promise.then((data) => {
-            this.debug('listen ' + data);
             console.log(data);
+            this.debug('listen ' + data);
             this.incomingMessage = data;
+        })
+        .catch((e) => {
+            this.debug('error listen ' + e);
+            this.error = e;
         })
     }
 
@@ -81,10 +84,15 @@ class BluetoothService {
                     res(this.incomingMessage);
                     this.debug('<<' + this.incomingMessage);
                     this.incomingMessage = null;
-                    cleatInteval(intId);
+                    clearInterval(intId);
+                } else if(this.error) {
+                    rej(this.error);
+                    this.debug('<<' + this.error);
+                    this.error = null;
+                    clearInterval(intId);
                 }
             }, 200)
-        })
+        }, )
     }
 
     setDebug(callback) {
