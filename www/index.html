@@ -23,7 +23,7 @@
                     </li>
                 </ul>
             </div>
-            <div v-if="showContent" class="content">
+            <div v-if="showContent" class="content" :style="{background-color: background }">
                 <button
                     v-on:click="disconnect()"
                     class="content__button">
@@ -32,7 +32,6 @@
                 <p class="content__main">
                     {{temperature}}
                 </p>
-                
             </div>
             <div class="debug">
                 <p>

@@ -22,6 +22,10 @@ var cordovaApp = {
   cordovaApp.initialize();
 
 let intevalId = null;
+function getColor(value){
+    var hue=((1-value)*200).toString(10);
+    return ["hsl(",hue,",100%,50%)"].join("");
+}
 
 function createVueApp() {
     let vueApp = new Vue({
@@ -109,7 +113,17 @@ function createVueApp() {
                     this.updateLog(this.temp);
                     let temp = parseInt(this.temp, 16);
                     return temp - 40 + ' °C';
-                } return ''
+                } return '';
+            },
+            background: function(){
+                console.log(temperature);
+                let value = temperature;
+                if(!temperature || temperature < 0){
+                    value = 0;
+                } else if(temperature > 100) {
+                    value = 100;
+                }
+                return getColor(value);
             }
           }
       })
