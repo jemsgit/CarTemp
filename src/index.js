@@ -106,8 +106,9 @@ function createVueApp() {
         computed: {
             temperature: function () {
                 if(this.temp) {
+                    this.updateLog(this.temp);
                     let temp = parseInt(this.temp, 16);
-                    return temp - 40 + ' C';
+                    return temp - 40 + ' °C';
                 } return ''
             }
           }

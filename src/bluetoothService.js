@@ -53,9 +53,12 @@ class BluetoothService {
     async getTemperature() {
         await this.sendData('0105');
         let temp = await this.getAnswer();
-        temp = temp.replace('0105', '');
-        temp = temp.replace('>', '');
-        return temp.trim();
+        if(temp){
+            temp = temp.replace('>', '').trim().split(' ');
+            temp = temp[temp.length - 1];
+            return temp;
+        }
+        return null;
     }
 
     async sendData(data) {
