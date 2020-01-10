@@ -23,7 +23,7 @@
                     </li>
                 </ul>
             </div>
-            <div v-if="showContent" class="content" :style="{background-color: background }">
+            <div v-if="showContent" class="content" v-bind:style="{'background-color': background }">
                 <button
                     v-on:click="disconnect()"
                     class="content__button">

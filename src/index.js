@@ -101,6 +101,8 @@ function createVueApp() {
             },
             updateLog: function(data) {
                 this.debug += '\r\n' + data;
+                var debugElement = document.querySelector(".debug p");
+                debugElement.scrollTop = debugElement.scrollHeight;
             },
             sendCustomCommand: async function() {
                 await bluetoothService.sendData(this.customCommand);
@@ -116,11 +118,11 @@ function createVueApp() {
                 } return '';
             },
             background: function(){
-                console.log(temperature);
-                let value = temperature;
-                if(!temperature || temperature < 0){
+                console.log(this.temperature);
+                let value = this.temperature;
+                if(!this.temperature || this.temperature < 0){
                     value = 0;
-                } else if(temperature > 100) {
+                } else if(this.temperature > 100) {
                     value = 100;
                 }
                 return getColor(value);

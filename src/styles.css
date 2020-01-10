@@ -54,7 +54,7 @@
     color: green;
 }
 
-.debug p { 
+.debug p {
     position: absolute;
     left: 0;
     right: 0;
@@ -63,20 +63,15 @@
     overflow: auto;
     display: block;
     white-space: pre-line;
-    overflow-anchor: none;
+    margin-bottom: 0;
+    line-height: 10px;
 }
-
-.debug p:after {
-    content: '';
-    display: block;
-    overflow-anchor: auto;
-    height: 1px;
-  }
 
 .debug-form {
     position: absolute;
     width: 100%;
     bottom: 0;
+    margin-bottom: 0;
 }
 
 .refresh-link {
