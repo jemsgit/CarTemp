@@ -1,12 +1,12 @@
 # CarTemp
 
-CarTemp is a cordova application for Android (or Iphone).
+CarTemp is a cordova application for Android (or Iphone) that shows temperature of your car engine via OBD2 bluetooth connection. Tested on Skoda Octavia A5. 
 
 ## Installation
 
 Use npm to install dependencies.
 
-```bash
+```
 npm i
 ```
 
