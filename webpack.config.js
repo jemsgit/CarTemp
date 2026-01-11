@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   mode: 'development',
@@ -7,18 +7,18 @@ module.exports = {
     path: path.resolve(__dirname, 'www'),
     filename: 'index.bundle.js'
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   resolve: {
     alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm-bundler.js'
     },
-    extensions: ['*', '.js', '.vue', '.json']
+    extensions: ['.js', '.vue', '.json']
   },
   module: {
     rules: [
       {
-        test: /\.(js)$/,
-        exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules\/(?!(cordova-plugin-webpack)\/).*/,
         use: {
           loader: 'babel-loader'
         }
@@ -28,7 +28,10 @@ module.exports = {
         use: [
           'vue-style-loader',
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              esModule: false
+            }
           }
         ]
       },
@@ -37,5 +40,5 @@ module.exports = {
         loader: 'vue-loader'
       }
     ]
-  }
-}
+  },
+};

@@ -16,13 +16,22 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <icon density="mdpi" height="57" src="res/icon.png" width="57" />
+    <icon src="res/icon.png" />
     <allow-intent href="market:*" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <preference name="loglevel" value="DEBUG" />
 </widget>
