@@ -53,6 +53,9 @@ function createVueApp() {
             selectDevice: async function(device) {
                 try{
                     this.updateLog(device)
+                    // Stop any existing monitoring before reconnecting
+                    this.stopMonitoring();
+
                     let connected = await bluetoothService.connectToDevice(device.id);
                     if(connected) {
                         this.updateLog('connected')
@@ -71,6 +74,11 @@ function createVueApp() {
                 }
             },
             startMonitoring: function() {
+                // Clear any existing interval to prevent multiple intervals
+                if (intevalId) {
+                    clearInterval(intevalId);
+                }
+
                 intevalId = setInterval(async () => {
                     this.temp = await bluetoothService.getTemperature();
                 }, 2000);
@@ -85,6 +93,7 @@ function createVueApp() {
                     this.updateLog('disconnected');
                     this.showList = true;
                     this.showContent = false;
+                    this.temp = null; // Clear temperature data
                 } catch(e) {
                     this.updateLog('err disconnect');
                     console.log(e)

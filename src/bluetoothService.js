@@ -5,6 +5,7 @@ class BluetoothService {
         this.error = null;
         this.regex = /([0-9A-Z]{2}\s[0-9A-Z]{2}\s[0-9A-Z]{2})/g;
         this.debug = () => {};
+        this.subscriptionActive = false;
     }
 
     async getDevices() {
@@ -15,21 +16,31 @@ class BluetoothService {
         this.debug('connecting to ' + uuid);
         let result = false;
         try{
+            // Ensure we're disconnected from any previous connections
+            if (this.deviceId) {
+                await this.disconnect();
+            }
+
             await this.promisify(bluetoothSerial.connect.bind(bluetoothSerial, uuid));
             this.deviceId = uuid;
             result = true;
             console.log('connected');
         } catch(e) {
-            console.log('error connect')
+            console.log('error connect', e)
             result = false;
         }
         return result;
     }
 
     async disconnect() {
-        await this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
+        if (this.subscriptionActive) {
+            await this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
+            this.subscriptionActive = false;
+        }
         await this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
         this.deviceId = null;
+        this.incomingMessage = null; // Reset incoming message buffer
+        this.error = null; // Reset error state
     }
 
     async initElm() {
@@ -37,6 +48,10 @@ class BluetoothService {
             this.debug('no device id');
             return false;
         }
+
+        // Clear any previous message before starting initialization
+        this.incomingMessage = null;
+
         let answer;
         this.listen();
         await this.sendData('ATZ');
@@ -51,14 +66,19 @@ class BluetoothService {
     }
 
     async getTemperature() {
-        await this.sendData('0105');
-        let temp = await this.getAnswer();
-        if(temp){
-            temp = temp.replace('>', '').trim().split(' ');
-            temp = temp[temp.length - 1];
-            return temp;
+        try {
+            await this.sendData('0105');
+            let temp = await this.getAnswer();
+            if(temp){
+                temp = temp.replace('>', '').trim().split(' ');
+                temp = temp[temp.length - 1];
+                return temp;
+            }
+            return null;
+        } catch (error) {
+            console.error('Error getting temperature:', error);
+            return null;
         }
-        return null;
     }
 
     async sendData(data) {
@@ -67,15 +87,34 @@ class BluetoothService {
     }
 
     listen() {
+        // Unsubscribe first if already subscribed to prevent multiple subscriptions
+        if (this.subscriptionActive) {
+            this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial)).then(() => {
+                this.subscriptionActive = false;
+            }).catch(() => {
+                // Even if unsubscribe fails, continue with fresh subscription
+                this.subscriptionActive = false;
+            });
+        }
+
         bluetoothSerial.subscribe('>', (data) => {
             this.debug('listen ' + data);
             console.log(data);
             this.incomingMessage = data;
-        }, () => {console.log('error')});
+        }, (error) => {
+            console.log('subscription error', error);
+            this.error = error;
+            this.subscriptionActive = false;
+        });
+
+        this.subscriptionActive = true;
     }
 
     async getAnswer() {
         return new Promise((res, rej) => {
+            let startTime = Date.now();
+            const timeout = 5000; // 5 second timeout
+
             let intId = setInterval(() => {
                 if(this.incomingMessage) {
                     res(this.incomingMessage);
@@ -86,6 +125,10 @@ class BluetoothService {
                     rej(this.error);
                     this.debug('<<' + this.error);
                     this.error = null;
+                    clearInterval(intId);
+                } else if (Date.now() - startTime > timeout) {
+                    // Timeout reached, reject the promise
+                    rej(new Error('Timeout waiting for response'));
                     clearInterval(intId);
                 }
             }, 200)
