@@ -20878,33 +20878,77 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `#app {
-    background: black;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
+___CSS_LOADER_EXPORT___.push([module.id, `/* Modern gradient background */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
+body {
+  display: flex;
+}
+
+#app {
+    background: linear-gradient(
+1deg, #2e387d 0%, #3a4698 50%, #525da5 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 10px 0 10px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.device-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.device-list ul {
+    list-style-type: none;
+}
+
+/* Device list styling with modern cards */
 .device-list__item {
-    background: white;
-    padding: 15px;
-    border: 1px green solid;
-    border-radius: 3px;
-    margin-top: 2px;
+    background: rgb(255 255 255 / 10%);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: #ffffffcf;
+    cursor: pointer;
+}
+
+.device-list__item:hover {
+    transform: translateY(-3px);
+    box-shadow: 1px 3px 3px rgba(0, 255, 150, 0.3);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .device-list__title {
     display: inline-block;
-    color: white;
-    font-size: 20px;
+    color: #fff;
+    font-size: 18px;
     width: 100%;
     text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .device-list {
-    max-height: calc(100% - 120px);
     overflow-y: auto;
 }
 
@@ -20912,65 +20956,217 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#app {
     padding-left: 0;
 }
 
+/* Modern button styling */
+.custom-command-section {
+    display: flex;
+    gap: 10px;
+}
+
+.send__button {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);
+    background: #986DEC;
+    padding: 12px;
+    flex: 1 1 30%;
+}
+
 .content__button {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     display: block;
-    font-size: 15px;
+    font-size: 16px;
+    background: #986DEC;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);
+    margin: 8px 0;
 }
 
+.content__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 1px 3px 3px rgba(0, 255, 150, 0.3);
+    background: #7A3EEC;
+}
+
+.content__button:active {
+    transform: translateY(0);
+}
+
+.content__button.disconnect {
+    background: linear-gradient(45deg, #ff5252, #ff7676);
+    box-shadow: 0 4px 10px rgba(255, 82, 82, 0.3);
+}
+
+.content__button.disconnect:hover {
+    background: linear-gradient(45deg, #ff7676, #ff9a9a);
+    box-shadow: 0 6px 15px rgba(255, 82, 82, 0.4);
+}
+
+/* Temperature display with dynamic color */
 .content__main {
-    font-size: 40px;
+    font-size: 60px;
     text-align: center;
     color: white;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transition: all 0.5s ease;
+    padding: 30px;
+    font-size: 150px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Debug panel with modern styling */
 .debug {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 120px;
-    color: green;
+    display: flex;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 12px;
+    flex-direction: column;
 }
 
 .debug p {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 30;
-    height: 90px;
     overflow: auto;
     display: block;
     white-space: pre-line;
     margin-bottom: 0;
-    line-height: 10px;
+    line-height: 18px;
+    color: #00ffaa;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    height: 100px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 255, 170, 0.2);
+    box-sizing: border-box;
 }
 
 .debug-form {
-    position: absolute;
+    position: relative;
     width: 100%;
-    bottom: 0;
     margin-bottom: 0;
+    display: flex;
+    gap: 10px;
 }
 
 .refresh-link {
     float: right;
-    font-size: 16px;
+    font-size: 18px;
+    color: #00ffaa;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(0, 255, 170, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 255, 170, 0.3);
 }
 
+.refresh-link:hover {
+    background: rgba(0, 255, 170, 0.2);
+    transform: scale(1.05);
+}
+
+/* Custom command input with modern styling */
 .custom-command {
-    height: 30px;
-    background: black;
-    color: green;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #00ffaa;
     width: 100%;
-    border: 1px green solid;
-    font-size: 20px;
+    border: 1px solid rgba(0, 255, 170, 0.3);
+    font-size: 16px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
 }
 
+.custom-command:focus {
+    outline: none;
+    border-color: #00ffaa;
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+    background: rgba(0, 0, 0, 0.7);
+}
 
+/* Animation for temperature display */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 
-`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"AAAA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,OAAO;IACP,QAAQ;IACR,SAAS;IACT,MAAM;AACV;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,uBAAuB;IACvB,kBAAkB;IAClB,eAAe;AACnB;;AAEA;IACI,qBAAqB;IACrB,YAAY;IACZ,eAAe;IACf,WAAW;IACX,kBAAkB;AACtB;;AAEA;IACI,8BAA8B;IAC9B,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,WAAW;IACX,aAAa;IACb,cAAc;IACd,eAAe;AACnB;;AAEA;IACI,eAAe;IACf,kBAAkB;IAClB,YAAY;AAChB;;AAEA;IACI,kBAAkB;IAClB,OAAO;IACP,QAAQ;IACR,SAAS;IACT,aAAa;IACb,YAAY;AAChB;;AAEA;IACI,kBAAkB;IAClB,OAAO;IACP,QAAQ;IACR,UAAU;IACV,YAAY;IACZ,cAAc;IACd,cAAc;IACd,qBAAqB;IACrB,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,SAAS;IACT,gBAAgB;AACpB;;AAEA;IACI,YAAY;IACZ,eAAe;AACnB;;AAEA;IACI,YAAY;IACZ,iBAAiB;IACjB,YAAY;IACZ,WAAW;IACX,uBAAuB;IACvB,eAAe;AACnB","sourcesContent":["#app {\n    background: black;\n    position: absolute;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    top: 0;\n}\n\n.device-list__item {\n    background: white;\n    padding: 15px;\n    border: 1px green solid;\n    border-radius: 3px;\n    margin-top: 2px;\n}\n\n.device-list__title {\n    display: inline-block;\n    color: white;\n    font-size: 20px;\n    width: 100%;\n    text-align: center;\n}\n\n.device-list {\n    max-height: calc(100% - 120px);\n    overflow-y: auto;\n}\n\n.device-list ul {\n    padding-left: 0;\n}\n\n.content__button {\n    width: 100%;\n    padding: 10px;\n    display: block;\n    font-size: 15px;\n}\n\n.content__main {\n    font-size: 40px;\n    text-align: center;\n    color: white;\n}\n\n.debug {\n    position: absolute;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    height: 120px;\n    color: green;\n}\n\n.debug p {\n    position: absolute;\n    left: 0;\n    right: 0;\n    bottom: 30;\n    height: 90px;\n    overflow: auto;\n    display: block;\n    white-space: pre-line;\n    margin-bottom: 0;\n    line-height: 10px;\n}\n\n.debug-form {\n    position: absolute;\n    width: 100%;\n    bottom: 0;\n    margin-bottom: 0;\n}\n\n.refresh-link {\n    float: right;\n    font-size: 16px;\n}\n\n.custom-command {\n    height: 30px;\n    background: black;\n    color: green;\n    width: 100%;\n    border: 1px green solid;\n    font-size: 20px;\n}\n\n\n\n"],"sourceRoot":""}]);
+.pulse-animation {
+    animation: pulse 1s infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#00c853, #00e676);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(#00e676, #00ff87);
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #00ffaa;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Permission message styling */
+.permission-message {
+    background: rgba(255, 100, 100, 0.2);
+    border: 1px solid rgba(255, 100, 100, 0.5);
+    color: #ff6b6b;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"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","sourcesContent":["/* Modern gradient background */\nhtml, body {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n}\n\nbody {\n  display: flex;\n}\n\n#app {\n    background: linear-gradient(\n1deg, #2e387d 0%, #3a4698 50%, #525da5 100%);\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    padding: 10px 10px 0 10px;\n    display: flex;\n    flex: 1;\n    flex-direction: column;\n    justify-content: space-between;\n    overflow: auto;\n}\n\n.content-container {\n    display: flex;\n    flex-direction: column;\n    flex: 1;\n    justify-content: space-between;\n}\n\n.device-list-container {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    flex: 1;\n}\n\n.device-list ul {\n    list-style-type: none;\n}\n\n/* Device list styling with modern cards */\n.device-list__item {\n    background: rgb(255 255 255 / 10%);\n    padding: 12px;\n    border-radius: 12px;\n    margin-top: 12px;\n    transition: all 0.3s ease;\n    backdrop-filter: blur(10px);\n    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);\n    color: #ffffffcf;\n    cursor: pointer;\n}\n\n.device-list__item:hover {\n    transform: translateY(-3px);\n    box-shadow: 1px 3px 3px rgba(0, 255, 150, 0.3);\n    background: rgba(255, 255, 255, 0.15);\n}\n\n.device-list__title {\n    display: inline-block;\n    color: #fff;\n    font-size: 18px;\n    width: 100%;\n    text-align: center;\n    font-weight: 600;\n    letter-spacing: 0.5px;\n}\n\n.device-list {\n    overflow-y: auto;\n}\n\n.device-list ul {\n    padding-left: 0;\n}\n\n/* Modern button styling */\n.custom-command-section {\n    display: flex;\n    gap: 10px;\n}\n\n.send__button {\n    width: 100%;\n    border: none;\n    border-radius: 8px;\n    cursor: pointer;\n    font-weight: 600;\n    letter-spacing: 0.5px;\n    text-transform: uppercase;\n    transition: all 0.3s ease;\n    box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);\n    background: #986DEC;\n    padding: 12px;\n    flex: 1 1 30%;\n}\n\n.content__button {\n    width: 100%;\n    padding: 15px;\n    display: block;\n    font-size: 16px;\n    background: #986DEC;\n    color: white;\n    border: none;\n    border-radius: 8px;\n    cursor: pointer;\n    font-weight: 600;\n    letter-spacing: 0.5px;\n    text-transform: uppercase;\n    transition: all 0.3s ease;\n    box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);\n    margin: 8px 0;\n}\n\n.content__button:hover {\n    transform: translateY(-2px);\n    box-shadow: 1px 3px 3px rgba(0, 255, 150, 0.3);\n    background: #7A3EEC;\n}\n\n.content__button:active {\n    transform: translateY(0);\n}\n\n.content__button.disconnect {\n    background: linear-gradient(45deg, #ff5252, #ff7676);\n    box-shadow: 0 4px 10px rgba(255, 82, 82, 0.3);\n}\n\n.content__button.disconnect:hover {\n    background: linear-gradient(45deg, #ff7676, #ff9a9a);\n    box-shadow: 0 6px 15px rgba(255, 82, 82, 0.4);\n}\n\n/* Temperature display with dynamic color */\n.content__main {\n    font-size: 60px;\n    text-align: center;\n    color: white;\n    font-weight: 700;\n    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);\n    transition: all 0.5s ease;\n    padding: 30px;\n    font-size: 150px;\n    border-radius: 20px;\n    background: rgba(0, 0, 0, 0.2);\n    backdrop-filter: blur(10px);\n    flex:1;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n/* Debug panel with modern styling */\n.debug {\n    display: flex;\n    height: 150px;\n    background: rgba(0, 0, 0, 0.7);\n    backdrop-filter: blur(10px);\n    padding: 10px;\n    border-radius: 12px;\n    flex-direction: column;\n}\n\n.debug p {\n    overflow: auto;\n    display: block;\n    white-space: pre-line;\n    margin-bottom: 0;\n    line-height: 18px;\n    color: #00ffaa;\n    font-family: 'Courier New', monospace;\n    font-size: 12px;\n    background: rgba(0, 0, 0, 0.3);\n    padding: 8px;\n    height: 100px;\n    border-radius: 6px;\n    border: 1px solid rgba(0, 255, 170, 0.2);\n    box-sizing: border-box;\n}\n\n.debug-form {\n    position: relative;\n    width: 100%;\n    margin-bottom: 0;\n    display: flex;\n    gap: 10px;\n}\n\n.refresh-link {\n    float: right;\n    font-size: 18px;\n    color: #00ffaa;\n    text-decoration: none;\n    padding: 8px 15px;\n    border-radius: 20px;\n    background: rgba(0, 255, 170, 0.1);\n    transition: all 0.3s ease;\n    border: 1px solid rgba(0, 255, 170, 0.3);\n}\n\n.refresh-link:hover {\n    background: rgba(0, 255, 170, 0.2);\n    transform: scale(1.05);\n}\n\n/* Custom command input with modern styling */\n.custom-command {\n    height: 40px;\n    background: rgba(0, 0, 0, 0.5);\n    color: #00ffaa;\n    width: 100%;\n    border: 1px solid rgba(0, 255, 170, 0.3);\n    font-size: 16px;\n    padding: 0 8px;\n    box-sizing: border-box;\n    border-radius: 8px;\n    font-family: 'Courier New', monospace;\n    transition: all 0.3s ease;\n}\n\n.custom-command:focus {\n    outline: none;\n    border-color: #00ffaa;\n    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);\n    background: rgba(0, 0, 0, 0.7);\n}\n\n/* Animation for temperature display */\n@keyframes pulse {\n    0% { transform: scale(1); }\n    50% { transform: scale(1.05); }\n    100% { transform: scale(1); }\n}\n\n.pulse-animation {\n    animation: pulse 1s infinite;\n}\n\n/* Scrollbar styling */\n::-webkit-scrollbar {\n    width: 8px;\n}\n\n::-webkit-scrollbar-track {\n    background: rgba(255, 255, 255, 0.05);\n    border-radius: 4px;\n}\n\n::-webkit-scrollbar-thumb {\n    background: linear-gradient(#00c853, #00e676);\n    border-radius: 4px;\n}\n\n::-webkit-scrollbar-thumb:hover {\n    background: linear-gradient(#00e676, #00ff87);\n}\n\n/* Loading animation */\n.loading {\n    display: inline-block;\n    width: 20px;\n    height: 20px;\n    border: 3px solid rgba(255, 255, 255, 0.3);\n    border-radius: 50%;\n    border-top-color: #00ffaa;\n    animation: spin 1s ease-in-out infinite;\n}\n\n@keyframes spin {\n    to { transform: rotate(360deg); }\n}\n\n/* Permission message styling */\n.permission-message {\n    background: rgba(255, 100, 100, 0.2);\n    border: 1px solid rgba(255, 100, 100, 0.5);\n    color: #ff6b6b;\n    padding: 15px;\n    border-radius: 8px;\n    margin: 10px;\n    text-align: center;\n    font-weight: 500;\n}\n\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21671,40 +21867,94 @@ var BluetoothService = /*#__PURE__*/function () {
   return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(BluetoothService, [{
     key: "requestBluetoothPermissions",
     value: function () {
-      var _requestBluetoothPermissions = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context) {
-          while (1) switch (_context.prev = _context.next) {
+      var _requestBluetoothPermissions = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              return _context.abrupt("return", new Promise(function (resolve, reject) {
-                if (!window.cordova || !window.cordova.plugins || !window.cordova.plugins.permissions) {
-                  resolve(true); // не Android
-                  return;
-                }
-                var permissions = window.cordova.plugins.permissions;
-                if (typeof device === 'undefined' || !device.platform || !device.version) {
-                  resolve(true);
-                  return;
-                }
-                var androidVersion = parseFloat(device.version);
-                if (androidVersion < 12) {
-                  resolve(true); // старые версии разрешения даются автоматически
-                  return;
-                }
-                var bluetoothPermissions = ['android.permission.BLUETOOTH_CONNECT', 'android.permission.BLUETOOTH_SCAN', 'android.permission.ACCESS_FINE_LOCATION'];
-                permissions.requestPermissions(bluetoothPermissions, function (status) {
-                  var allGranted = bluetoothPermissions.every(function (p) {
-                    return status.hasPermission[p];
-                  });
-                  if (allGranted) resolve(true);else reject(new Error('Not all Bluetooth permissions granted'));
-                }, function (err) {
-                  return reject(err);
-                });
-              }));
+              return _context2.abrupt("return", new Promise(/*#__PURE__*/function () {
+                var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(resolve, reject) {
+                  var androidVersion, permissions, bluetoothPermissions;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context) {
+                    while (1) switch (_context.prev = _context.next) {
+                      case 0:
+                        if (window.cordova) {
+                          _context.next = 1;
+                          break;
+                        }
+                        resolve(true); // Browser environment doesn't need permissions
+                        return _context.abrupt("return");
+                      case 1:
+                        if (!(typeof device === 'undefined' || !device.platform || !device.version)) {
+                          _context.next = 2;
+                          break;
+                        }
+                        console.warn('Device info not available, assuming non-Android platform');
+                        resolve(true);
+                        return _context.abrupt("return");
+                      case 2:
+                        androidVersion = parseFloat(device.version); // For Android 12+ (including Android 14), we need specific permissions
+                        if (!(androidVersion >= 12)) {
+                          _context.next = 4;
+                          break;
+                        }
+                        if (!(!window.cordova.plugins || !window.cordova.plugins.permissions)) {
+                          _context.next = 3;
+                          break;
+                        }
+                        console.error('Permissions plugin not available');
+                        reject(new Error('Permissions plugin not available'));
+                        return _context.abrupt("return");
+                      case 3:
+                        permissions = window.cordova.plugins.permissions; // Android 14 requires these specific permissions for Bluetooth
+                        bluetoothPermissions = [permissions.BLUETOOTH_CONNECT, permissions.BLUETOOTH_SCAN]; // For Android 14, we might also need location permissions for Bluetooth discovery
+                        if (androidVersion >= 14) {
+                          bluetoothPermissions.push(permissions.ACCESS_FINE_LOCATION);
+                        }
+
+                        // Request permissions
+                        permissions.requestPermissions(bluetoothPermissions, function (status) {
+                          var allGranted = bluetoothPermissions.every(function (permission) {
+                            // Handle different permission formats
+                            if (typeof permission === 'string') {
+                              // If permission is a string, check direct
+                              return status.hasPermission || status[permission] || status.hasPermission === true;
+                            } else {
+                              // If permission is a constant from the plugin
+                              return status.hasPermission[permission] || status.hasPermission === true;
+                            }
+                          });
+                          if (allGranted) {
+                            console.log('All Bluetooth permissions granted');
+                            resolve(true);
+                          } else {
+                            console.error('Not all Bluetooth permissions granted', status);
+                            reject(new Error('Not all Bluetooth permissions granted'));
+                          }
+                        }, function (err) {
+                          console.error('Error requesting permissions:', err);
+                          reject(new Error('Error requesting Bluetooth permissions: ' + err.message));
+                        });
+                        _context.next = 5;
+                        break;
+                      case 4:
+                        // For older Android versions, Bluetooth permissions are granted automatically
+                        console.log('Older Android version, permissions handled automatically');
+                        resolve(true);
+                      case 5:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }, _callee);
+                }));
+                return function (_x, _x2) {
+                  return _ref.apply(this, arguments);
+                };
+              }()));
             case 1:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
-        }, _callee);
+        }, _callee2);
       }));
       function requestBluetoothPermissions() {
         return _requestBluetoothPermissions.apply(this, arguments);
@@ -21714,36 +21964,43 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "getDevices",
     value: function () {
-      var _getDevices = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2() {
-        var _t;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
+      var _getDevices = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
+        var _cordova, _cordova2, _t;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context2.prev = 0;
-              // Request permissions before attempting to get devices
-              console.log(cordova.platformId);
-              if (!(cordova.platformId === 'android')) {
-                _context2.next = 1;
+              if (window.bluetoothSerial) {
+                _context3.next = 1;
                 break;
               }
-              _context2.next = 1;
-              return this.requestBluetoothPermissions();
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context3.abrupt("return", []);
             case 1:
-              _context2.next = 2;
-              return this.promisify(bluetoothSerial.list.bind(bluetoothSerial));
+              _context3.prev = 1;
+              // Request permissions before attempting to get devices
+              console.log((_cordova = cordova) === null || _cordova === void 0 ? void 0 : _cordova.platformId);
+              if (!(((_cordova2 = cordova) === null || _cordova2 === void 0 ? void 0 : _cordova2.platformId) === 'android')) {
+                _context3.next = 2;
+                break;
+              }
+              _context3.next = 2;
+              return this.requestBluetoothPermissions();
             case 2:
-              return _context2.abrupt("return", _context2.sent);
+              _context3.next = 3;
+              return this.promisify(bluetoothSerial.list.bind(bluetoothSerial));
             case 3:
-              _context2.prev = 3;
-              _t = _context2["catch"](0);
+              return _context3.abrupt("return", _context3.sent);
+            case 4:
+              _context3.prev = 4;
+              _t = _context3["catch"](1);
               console.error('Error getting devices:', _t);
               // Re-throw the error to be handled by the calling function
               throw _t;
-            case 4:
+            case 5:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
-        }, _callee2, this, [[0, 3]]);
+        }, _callee3, this, [[1, 4]]);
       }));
       function getDevices() {
         return _getDevices.apply(this, arguments);
@@ -21753,57 +22010,64 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "connectToDevice",
     value: function () {
-      var _connectToDevice = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(uuid) {
-        var result, _t2;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
+      var _connectToDevice = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee4(uuid) {
+        var result, _cordova3, _t2;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
             case 0:
+              if (window.bluetoothSerial) {
+                _context4.next = 1;
+                break;
+              }
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context4.abrupt("return", false);
+            case 1:
               this.debug('connecting to ' + uuid);
               result = false;
-              _context3.prev = 1;
-              if (!(cordova.platformId === 'android')) {
-                _context3.next = 2;
+              _context4.prev = 2;
+              if (!(((_cordova3 = cordova) === null || _cordova3 === void 0 ? void 0 : _cordova3.platformId) === 'android')) {
+                _context4.next = 3;
                 break;
               }
-              _context3.next = 2;
+              _context4.next = 3;
               return this.requestBluetoothPermissions();
-            case 2:
+            case 3:
               if (!this.deviceId) {
-                _context3.next = 3;
+                _context4.next = 4;
                 break;
               }
-              _context3.next = 3;
+              _context4.next = 4;
               return this.disconnect();
-            case 3:
-              _context3.next = 4;
-              return this.promisify(bluetoothSerial.connect.bind(bluetoothSerial, uuid));
             case 4:
+              _context4.next = 5;
+              return this.promisify(bluetoothSerial.connect.bind(bluetoothSerial, uuid));
+            case 5:
               this.deviceId = uuid;
               result = true;
               console.log('connected');
-              _context3.next = 7;
+              _context4.next = 8;
               break;
-            case 5:
-              _context3.prev = 5;
-              _t2 = _context3["catch"](1);
+            case 6:
+              _context4.prev = 6;
+              _t2 = _context4["catch"](2);
               console.log('error connect', _t2);
               // Check if the error is related to permissions and re-throw for UI handling
               if (!(_t2.message && (_t2.message.includes('Permission') || _t2.message.includes('permission')))) {
-                _context3.next = 6;
+                _context4.next = 7;
                 break;
               }
               throw _t2;
-            case 6:
-              result = false;
             case 7:
-              return _context3.abrupt("return", result);
+              result = false;
             case 8:
+              return _context4.abrupt("return", result);
+            case 9:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
-        }, _callee3, this, [[1, 5]]);
+        }, _callee4, this, [[2, 6]]);
       }));
-      function connectToDevice(_x) {
+      function connectToDevice(_x3) {
         return _connectToDevice.apply(this, arguments);
       }
       return connectToDevice;
@@ -21811,30 +22075,40 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "disconnect",
     value: function () {
-      var _disconnect = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+      var _disconnect = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
-              if (!this.subscriptionActive) {
-                _context4.next = 2;
+              if (window.bluetoothSerial) {
+                _context5.next = 1;
                 break;
               }
-              _context4.next = 1;
-              return this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
+              console.warn('Bluetooth serial not available in browser environment');
+              this.deviceId = null;
+              this.incomingMessage = null;
+              this.error = null;
+              return _context5.abrupt("return");
             case 1:
-              this.subscriptionActive = false;
+              if (!this.subscriptionActive) {
+                _context5.next = 3;
+                break;
+              }
+              _context5.next = 2;
+              return this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
             case 2:
-              _context4.next = 3;
-              return this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
+              this.subscriptionActive = false;
             case 3:
+              _context5.next = 4;
+              return this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
+            case 4:
               this.deviceId = null;
               this.incomingMessage = null; // Reset incoming message buffer
               this.error = null; // Reset error state
-            case 4:
+            case 5:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
       function disconnect() {
         return _disconnect.apply(this, arguments);
@@ -21844,58 +22118,65 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "initElm",
     value: function () {
-      var _initElm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee5() {
+      var _initElm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee6() {
         var answer;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
             case 0:
+              if (window.bluetoothSerial) {
+                _context6.next = 1;
+                break;
+              }
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context6.abrupt("return", false);
+            case 1:
               if (this.deviceId) {
-                _context5.next = 1;
+                _context6.next = 2;
                 break;
               }
               this.debug('no device id');
-              return _context5.abrupt("return", false);
-            case 1:
+              return _context6.abrupt("return", false);
+            case 2:
               // Clear any previous message before starting initialization
               this.incomingMessage = null;
               this.listen();
-              _context5.next = 2;
+              _context6.next = 3;
               return this.sendData('ATZ');
-            case 2:
-              _context5.next = 3;
-              return this.getAnswer();
             case 3:
-              answer = _context5.sent;
-              _context5.next = 4;
-              return this.sendData('ATSP0');
+              _context6.next = 4;
+              return this.getAnswer();
             case 4:
-              _context5.next = 5;
-              return this.getAnswer();
+              answer = _context6.sent;
+              _context6.next = 5;
+              return this.sendData('ATSP0');
             case 5:
-              answer = _context5.sent;
-              _context5.next = 6;
-              return this.sendData('0100');
-            case 6:
-              _context5.next = 7;
+              _context6.next = 6;
               return this.getAnswer();
+            case 6:
+              answer = _context6.sent;
+              _context6.next = 7;
+              return this.sendData('0100');
             case 7:
-              answer = _context5.sent;
+              _context6.next = 8;
+              return this.getAnswer();
             case 8:
+              answer = _context6.sent;
+            case 9:
               if (answer.match(this.regex)) {
-                _context5.next = 10;
+                _context6.next = 11;
                 break;
               }
-              _context5.next = 9;
+              _context6.next = 10;
               return this.getAnswer();
-            case 9:
-              answer = _context5.sent;
-              _context5.next = 8;
-              break;
             case 10:
+              answer = _context6.sent;
+              _context6.next = 9;
+              break;
+            case 11:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
       function initElm() {
         return _initElm.apply(this, arguments);
@@ -21905,38 +22186,45 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "getTemperature",
     value: function () {
-      var _getTemperature = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee6() {
+      var _getTemperature = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee7() {
         var temp, _t3;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context6) {
-          while (1) switch (_context6.prev = _context6.next) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
             case 0:
-              _context6.prev = 0;
-              _context6.next = 1;
-              return this.sendData('0105');
+              if (window.bluetoothSerial) {
+                _context7.next = 1;
+                break;
+              }
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context7.abrupt("return", null);
             case 1:
-              _context6.next = 2;
-              return this.getAnswer();
+              _context7.prev = 1;
+              _context7.next = 2;
+              return this.sendData('0105');
             case 2:
-              temp = _context6.sent;
+              _context7.next = 3;
+              return this.getAnswer();
+            case 3:
+              temp = _context7.sent;
               if (!temp) {
-                _context6.next = 3;
+                _context7.next = 4;
                 break;
               }
               temp = temp.replace('>', '').trim().split(' ');
               temp = temp[temp.length - 1];
-              return _context6.abrupt("return", temp);
-            case 3:
-              return _context6.abrupt("return", null);
+              return _context7.abrupt("return", temp);
             case 4:
-              _context6.prev = 4;
-              _t3 = _context6["catch"](0);
-              console.error('Error getting temperature:', _t3);
-              return _context6.abrupt("return", null);
+              return _context7.abrupt("return", null);
             case 5:
+              _context7.prev = 5;
+              _t3 = _context7["catch"](1);
+              console.error('Error getting temperature:', _t3);
+              return _context7.abrupt("return", null);
+            case 6:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
-        }, _callee6, this, [[0, 4]]);
+        }, _callee7, this, [[1, 5]]);
       }));
       function getTemperature() {
         return _getTemperature.apply(this, arguments);
@@ -21946,22 +22234,29 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "sendData",
     value: function () {
-      var _sendData = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee7(data) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context7) {
-          while (1) switch (_context7.prev = _context7.next) {
+      var _sendData = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee8(data) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context8) {
+          while (1) switch (_context8.prev = _context8.next) {
             case 0:
-              this.debug('>' + data + '\r\n');
-              _context7.next = 1;
-              return this.promisify(bluetoothSerial.write.bind(bluetoothSerial, data + '\r\n'));
+              if (window.bluetoothSerial) {
+                _context8.next = 1;
+                break;
+              }
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context8.abrupt("return", Promise.reject(new Error('Bluetooth serial not available')));
             case 1:
-              return _context7.abrupt("return", _context7.sent);
+              this.debug('>' + data + '\r\n');
+              _context8.next = 2;
+              return this.promisify(bluetoothSerial.write.bind(bluetoothSerial, data + '\r\n'));
             case 2:
+              return _context8.abrupt("return", _context8.sent);
+            case 3:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
-      function sendData(_x2) {
+      function sendData(_x4) {
         return _sendData.apply(this, arguments);
       }
       return sendData;
@@ -21970,6 +22265,12 @@ var BluetoothService = /*#__PURE__*/function () {
     key: "listen",
     value: function listen() {
       var _this = this;
+      // Check if bluetoothSerial is available (not in browser)
+      if (!window.bluetoothSerial) {
+        console.warn('Bluetooth serial not available in browser environment');
+        return;
+      }
+
       // Unsubscribe first if already subscribed to prevent multiple subscriptions
       if (this.subscriptionActive) {
         this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial)).then(function () {
@@ -21993,12 +22294,19 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "getAnswer",
     value: function () {
-      var _getAnswer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee8() {
+      var _getAnswer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee9() {
         var _this2 = this;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context8) {
-          while (1) switch (_context8.prev = _context8.next) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function (_context9) {
+          while (1) switch (_context9.prev = _context9.next) {
             case 0:
-              return _context8.abrupt("return", new Promise(function (res, rej) {
+              if (window.bluetoothSerial) {
+                _context9.next = 1;
+                break;
+              }
+              console.warn('Bluetooth serial not available in browser environment');
+              return _context9.abrupt("return", Promise.reject(new Error('Bluetooth serial not available')));
+            case 1:
+              return _context9.abrupt("return", new Promise(function (res, rej) {
                 var startTime = Date.now();
                 var timeout = 5000; // 5 second timeout
 
@@ -22020,11 +22328,11 @@ var BluetoothService = /*#__PURE__*/function () {
                   }
                 }, 200);
               }));
-            case 1:
+            case 2:
             case "end":
-              return _context8.stop();
+              return _context9.stop();
           }
-        }, _callee8);
+        }, _callee9);
       }));
       function getAnswer() {
         return _getAnswer.apply(this, arguments);
@@ -22039,6 +22347,10 @@ var BluetoothService = /*#__PURE__*/function () {
   }, {
     key: "promisify",
     value: function promisify(action) {
+      // Check if bluetoothSerial is available (not in browser)
+      if (!window.bluetoothSerial) {
+        return Promise.reject(new Error('Bluetooth serial not available in browser environment'));
+      }
       return new Promise(function (resolve, reject) {
         action(function (data) {
           resolve(data);
@@ -22198,21 +22510,22 @@ var cordovaApp = {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             if (!(cordova.plugins && cordova.plugins.permissions)) {
-              _context.next = 7;
+              _context.next = 9;
               break;
             }
             console.log('Permissions plugin available');
 
             // Check if device object is available (not available in browser)
             if (!(typeof device !== 'undefined' && device.platform && device.version)) {
-              _context.next = 5;
+              _context.next = 7;
               break;
             }
             if (!(device.platform.toLowerCase() === 'android' && parseInt(device.version) >= 12)) {
-              _context.next = 4;
+              _context.next = 5;
               break;
             }
             _context.prev = 1;
+            console.log('Requesting Bluetooth permissions for Android ' + device.version);
             _context.next = 2;
             return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].requestBluetoothPermissions();
           case 2:
@@ -22223,21 +22536,30 @@ var cordovaApp = {
             _context.prev = 3;
             _t = _context["catch"](1);
             console.error('Error requesting Bluetooth permissions:', _t);
-            // Optionally show a user-friendly message about permissions
-            alert('Для работы приложения необходимо разрешение на использование Bluetooth. Пожалуйста, предоставьте его в настройках приложения.');
+            // Show a user-friendly message about permissions
+            // Using setTimeout to ensure DOM is ready
+            setTimeout(function () {
+              alert('Для работы приложения необходимо разрешение на использование Bluetooth. Пожалуйста, предоставьте его в настройках приложения.');
+            }, 1000);
           case 4:
             _context.next = 6;
             break;
           case 5:
-            console.log('Device info not available (running in browser)');
+            console.log('Android version < 12, using legacy permissions');
           case 6:
             _context.next = 8;
             break;
           case 7:
-            console.log('Permissions plugin not available');
+            console.log('Device info not available (running in browser)');
           case 8:
-            createVueApp();
+            _context.next = 10;
+            break;
           case 9:
+            console.log('Permissions plugin not available');
+            // Still create the Vue app even if permissions plugin is not available
+          case 10:
+            createVueApp();
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -22267,55 +22589,87 @@ function createVueApp() {
         temp: null,
         debug: '',
         customCommand: '',
-        deviceId: null
+        deviceId: null,
+        isLoading: false // Add loading state
       };
     },
     methods: {
       getDeviceList: function getDeviceList() {
         var _this = this;
         return (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
-          var devices, _t2;
+          var _cordova, androidVersion, devices, _t2;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function (_context2) {
             while (1) switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _this.devices = [];
+                // Show loading indicator
+                _this.isLoading = true;
                 // Show permission message before attempting to get devices
                 _this.showPermissionMessage = true;
+
+                // On Android 12+, we need to ensure permissions are granted before scanning
+                if (!(((_cordova = cordova) === null || _cordova === void 0 ? void 0 : _cordova.platformId) === 'android' && typeof device !== 'undefined' && device.version)) {
+                  _context2.next = 1;
+                  break;
+                }
+                androidVersion = parseFloat(device.version);
+                if (!(androidVersion >= 12)) {
+                  _context2.next = 1;
+                  break;
+                }
                 _context2.next = 1;
-                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].getDevices();
+                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].requestBluetoothPermissions();
               case 1:
+                _context2.next = 2;
+                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].getDevices();
+              case 2:
                 devices = _context2.sent;
                 _this.devices = devices;
                 // Hide permission message after successful retrieval
                 _this.showPermissionMessage = false;
-                _context2.next = 3;
+                _context2.next = 4;
                 break;
-              case 2:
-                _context2.prev = 2;
+              case 3:
+                _context2.prev = 3;
                 _t2 = _context2["catch"](0);
                 console.log(_t2);
                 // Show user-friendly error message for permission issues
-                if (_t2.message && _t2.message.includes('Permission')) {
+                if (_t2.message && (_t2.message.includes('Permission') || _t2.message.includes('permission'))) {
                   _this.updateLog('Bluetooth permission denied. Please enable Bluetooth permissions in app settings.');
                   // Show the permission message again if permission was denied
                   _this.showPermissionMessage = true;
+                  // Prompt user to go to settings
+                  setTimeout(function () {
+                    if (cordova.plugins.diagnostic) {
+                      cordova.plugins.diagnostic.switchToSettings(function () {
+                        console.log("Switched to settings");
+                      }, function (error) {
+                        console.log("Error opening settings: " + error);
+                      });
+                    }
+                  }, 2000);
                 } else {
                   _this.updateLog('Error getting devices: ' + _t2.message);
                   // Hide the permission message for non-permission errors
                   _this.showPermissionMessage = false;
                 }
-              case 3:
+              case 4:
+                _context2.prev = 4;
+                // Hide loading indicator
+                _this.isLoading = false;
+                return _context2.finish(4);
+              case 5:
               case "end":
                 return _context2.stop();
             }
-          }, _callee2, null, [[0, 2]]);
+          }, _callee2, null, [[0, 3, 4, 5]]);
         }))();
       },
       selectDevice: function selectDevice(device) {
         var _this2 = this;
         return (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
-          var connected, _t3;
+          var _cordova2, androidVersion, connected, _t3;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function (_context3) {
             while (1) switch (_context3.prev = _context3.next) {
               case 0:
@@ -22323,46 +22677,70 @@ function createVueApp() {
                 _this2.updateLog(device);
                 // Stop any existing monitoring before reconnecting
                 _this2.stopMonitoring();
+
+                // Ensure permissions are granted before connecting
+                if (!(((_cordova2 = cordova) === null || _cordova2 === void 0 ? void 0 : _cordova2.platformId) === 'android' && typeof device !== 'undefined' && device.version)) {
+                  _context3.next = 1;
+                  break;
+                }
+                androidVersion = parseFloat(device.version);
+                if (!(androidVersion >= 12)) {
+                  _context3.next = 1;
+                  break;
+                }
                 _context3.next = 1;
-                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].connectToDevice(device.id);
+                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].requestBluetoothPermissions();
               case 1:
+                _context3.next = 2;
+                return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].connectToDevice(device.id);
+              case 2:
                 connected = _context3.sent;
                 if (!connected) {
-                  _context3.next = 3;
+                  _context3.next = 4;
                   break;
                 }
                 _this2.updateLog('connected');
                 _this2.deviceId = device.id;
                 _this2.showList = false;
                 _this2.showContent = true;
-                _context3.next = 2;
+                _context3.next = 3;
                 return _bluetoothService__WEBPACK_IMPORTED_MODULE_3__["default"].initElm();
-              case 2:
+              case 3:
                 _this2.updateLog('elm inited');
                 _this2.startMonitoring();
-                _context3.next = 4;
+                _context3.next = 5;
                 break;
-              case 3:
-                _this2.updateLog('connect failed');
               case 4:
-                _context3.next = 6;
-                break;
+                _this2.updateLog('connect failed');
               case 5:
-                _context3.prev = 5;
+                _context3.next = 7;
+                break;
+              case 6:
+                _context3.prev = 6;
                 _t3 = _context3["catch"](0);
                 _this2.updateLog('connect failed');
                 console.log(_t3);
                 // Show user-friendly error message for permission issues
-                if (_t3.message && _t3.message.includes('Permission')) {
+                if (_t3.message && (_t3.message.includes('Permission') || _t3.message.includes('permission'))) {
                   _this2.updateLog('Bluetooth permission denied. Please enable Bluetooth permissions in app settings.');
+                  // Prompt user to go to settings
+                  setTimeout(function () {
+                    if (cordova.plugins.diagnostic) {
+                      cordova.plugins.diagnostic.switchToSettings(function () {
+                        console.log("Switched to settings");
+                      }, function (error) {
+                        console.log("Error opening settings: " + error);
+                      });
+                    }
+                  }, 2000);
                 } else {
                   _this2.updateLog('Connection error: ' + _t3.message);
                 }
-              case 6:
+              case 7:
               case "end":
                 return _context3.stop();
             }
-          }, _callee3, null, [[0, 5]]);
+          }, _callee3, null, [[0, 6]]);
         }))();
       },
       startMonitoring: function startMonitoring() {

@@ -68,13 +68,16 @@ function createVueApp() {
                 temp: null,
                 debug: '',
                 customCommand: '',
-                deviceId: null
+                deviceId: null,
+                isLoading: false // Add loading state
              }
         },
         methods: {
             async getDeviceList() {
                 try{
                     this.devices = [];
+                    // Show loading indicator
+                    this.isLoading = true;
                     // Show permission message before attempting to get devices
                     this.showPermissionMessage = true;
 
@@ -112,6 +115,9 @@ function createVueApp() {
                         // Hide the permission message for non-permission errors
                         this.showPermissionMessage = false;
                     }
+                } finally {
+                    // Hide loading indicator
+                    this.isLoading = false;
                 }
             },
             async selectDevice(device) {

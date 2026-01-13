@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
@@ -6,44 +7,67 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <title>CarTemp - Bluetooth OBD Scanner</title>
     </head>
     <body>
-        <div id="app" :on-refresh="onRefresh">
-            <div v-if="showList" class="device-list">
-                <span class="device-list__title">Список устройств
-                     <a class="refresh-link" v-on:click.prevent="onRefresh">REFRESH</a>
-                </span>
-                <!-- Message about permissions -->
-                <p v-if="showPermissionMessage" class="permission-message">
-                    Приложению требуется разрешение на использование Bluetooth. Пожалуйста, разрешите в появившемся окне.
-                </p>
-                <ul>
-                    <li
-                        v-for="device in devices"
-                        v-on:click="selectDevice(device)"
-                        class="device-list__item">
-                        {{ device.name }}
-                    </li>
-                </ul>
+        <div id="app">
+            <div v-if="showList" class="device-list-container">
+                <div>
+                    <h2 class="device-list__title">Bluetooth OBD Devices</h2>
+
+                    <!-- Message about permissions -->
+                    <div v-if="showPermissionMessage" class="permission-message">
+                        <span v-if="isLoading" class="loading"></span>
+                        Please allow Bluetooth permissions to scan for devices
+                    </div>
+
+                    <div class="device-list">
+                        <ul>
+                            <li
+                                v-for="device in devices"
+                                v-on:click="selectDevice(device)"
+                                class="device-list__item">
+                                <strong>{{ device.name || 'Unknown Device' }}</strong><br>
+                                <small>{{ device.id }}</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button v-on:click="onRefresh" class="content__button refresh-btn">
+                    <span v-if="isLoading" class="loading"></span>
+                    {{ isLoading ? 'Scanning...' : 'Refresh Devices' }}
+                </button>
             </div>
-            <div v-if="showContent" class="content" v-bind:style="{'background-color': background }">
+
+            <div v-if="showContent" class="content-container">
+                <div class="content__main" v-bind:style="{'background-color': background }">
+                    {{temperature}}
+                </div>
+
                 <button
                     v-on:click="disconnect()"
-                    class="content__button">
+                    class="content__button disconnect">
                     Disconnect
                 </button>
-                <p class="content__main">
-                    {{temperature}}
-                </p>
+
+                
             </div>
+
             <div class="debug">
                 <p>
                     {{ debug }}
                 </p>
-                <form v-on:submit.prevent="sendCustomCommand" class="debug-form">
-                    <input type="text" v-model="customCommand" class="custom-command"/>
-                </form>
+                <div class="custom-command-section">
+                    <input
+                        type="text"
+                        v-model="customCommand"
+                        placeholder="Enter custom command (e.g., 010D for RPM)"
+                        class="custom-command"
+                        v-on:keyup.enter="sendCustomCommand"
+                    >
+                    <button v-on:click="sendCustomCommand" class="send__button">Send</button>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

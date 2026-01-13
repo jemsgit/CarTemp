@@ -54,7 +54,7 @@ class BluetoothService {
                         const allGranted = bluetoothPermissions.every(permission => {
                             // Handle different permission formats
                             if (typeof permission === 'string') {
-                                // If permission is a string, check directly
+                                // If permission is a string, check direct
                                 return status.hasPermission || status[permission] || status.hasPermission === true;
                             } else {
                                 // If permission is a constant from the plugin

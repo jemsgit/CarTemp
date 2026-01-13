@@ -8,7 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "dev:run": "concurrently \"npm:dev\" \"cordova run android --device\""
+    "dev:run": "concurrently \"npm:dev\" \"cordova run android --device\"",
+    "dev:browser": "concurrently \"npm:dev\" \"cordova run browser\"",
+    "dev:watch": "concurrently \"npm:dev\" \"chokidar 'www/**/*' -c 'cordova prepare browser'\"",
+    "dev:android:watch": "concurrently \"npm:dev\" \"chokidar 'www/**/*' -c 'cordova prepare android && cordova run android --device'\"",
+    "watch:cordova": "node scripts/watch-cordova.js",
+    "watch:cordova:browser": "concurrently \"npm:dev\" \"node scripts/watch-cordova.js browser\"",
+    "watch:cordova:android": "concurrently \"npm:dev\" \"node scripts/watch-cordova.js android\""
   },
   "keywords": [
     "ecosystem:cordova"
@@ -29,6 +35,7 @@
     "@babel/preset-react": "^7.23.3",
     "@vue/compiler-sfc": "^3.4.21",
     "babel-loader": "^9.1.3",
+    "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.1",
     "cordova-android": "^14.0.1",
     "cordova-browser": "^7.0.0",
