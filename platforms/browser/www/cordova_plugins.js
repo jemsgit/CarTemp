@@ -15,14 +15,38 @@ module.exports = [
         "clobbers": [
             "window.bluetoothSerial"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+        "id": "cordova-plugin-android-permissions.Permissions",
+        "pluginId": "cordova-plugin-android-permissions",
+        "clobbers": [
+            "cordova.plugins.permissions"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "pluginId": "cordova-plugin-device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/src/browser/DeviceProxy.js",
+        "id": "cordova-plugin-device.DeviceProxy",
+        "pluginId": "cordova-plugin-device",
+        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "cordova-plugin-bluetooth-serial": "0.4.7",
-    "cordova-plugin-webpack": "0.4.7",
-    "cordova-plugin-whitelist": "1.3.4"
+    "cordova-custom-config": "5.1.1",
+    "cordova-plugin-android-permissions": "1.1.5",
+    "cordova-plugin-device": "3.0.0",
+    "cordova.plugins.diagnostic": "7.2.8"
 }
 // BOTTOM OF METADATA
 });

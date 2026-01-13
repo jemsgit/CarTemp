@@ -1,3 +1,4 @@
+const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 
 module.exports = {
@@ -10,35 +11,28 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm-bundler.js'
+      vue$: 'vue/dist/vue.esm-bundler.js'
     },
     extensions: ['.js', '.vue', '.json']
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules\/(?!(cordova-plugin-webpack)\/).*/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              esModule: false
-            }
-          }
-        ]
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['vue-style-loader', 'css-loader']
       }
     ]
   },
+  plugins: [
+    new VueLoaderPlugin() // 🔥 ОБЯЗАТЕЛЬНО
+  ]
 };

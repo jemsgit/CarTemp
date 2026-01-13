@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-debug-34:/xml_backup_rules.xml.flat",
+        "source": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-main-36:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.cartemp.app-debug-34:/mipmap-anydpi-v33_ic_launcher.xml.flat",
+        "source": "com.example.cartemp.app-main-36:/mipmap-anydpi-v33/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-debug-34:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-main-36:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.cartemp.app-debug-34:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.cartemp.app-main-36:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-debug-34:/layout_activity_main.xml.flat",
+        "source": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-main-36:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-debug-34:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-main-36:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.cartemp.app-debug-34:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.cartemp.app-main-36:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.cartemp.app-debug-34:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.cartemp.app-main-36:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-debug-34:/xml_data_extraction_rules.xml.flat",
+        "source": "/Users/evgeniim/.gradle/daemon/8.10.2/com.example.cartemp.app-main-36:/xml/data_extraction_rules.xml"
+    }
+]

@@ -14,6 +14,10 @@
                 <span class="device-list__title">Список устройств
                      <a class="refresh-link" v-on:click.prevent="onRefresh">REFRESH</a>
                 </span>
+                <!-- Message about permissions -->
+                <p v-if="showPermissionMessage" class="permission-message">
+                    Приложению требуется разрешение на использование Bluetooth. Пожалуйста, разрешите в появившемся окне.
+                </p>
                 <ul>
                     <li
                         v-for="device in devices"

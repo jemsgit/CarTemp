@@ -4,16 +4,33 @@
     "uninstalled": []
   },
   "config_munge": {
-    "files": {}
+    "files": {
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Device\"><param name=\"browser-package\" value=\"Device\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
   },
   "installed_plugins": {
     "cordova-plugin-bluetooth-serial": {
       "PACKAGE_NAME": "com.example.cartemp"
     },
-    "cordova-plugin-webpack": {
+    "cordova-custom-config": {
       "PACKAGE_NAME": "com.example.cartemp"
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova.plugins.diagnostic": {
       "PACKAGE_NAME": "com.example.cartemp"
     }
   },
@@ -34,11 +51,35 @@
       "clobbers": [
         "window.bluetoothSerial"
       ]
+    },
+    {
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "pluginId": "cordova-plugin-android-permissions",
+      "clobbers": [
+        "cordova.plugins.permissions"
+      ]
+    },
+    {
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "id": "cordova-plugin-device.device",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
+    },
+    {
+      "file": "plugins/cordova-plugin-device/src/browser/DeviceProxy.js",
+      "id": "cordova-plugin-device.DeviceProxy",
+      "pluginId": "cordova-plugin-device",
+      "runs": true
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-bluetooth-serial": "0.4.7",
-    "cordova-plugin-webpack": "0.4.7",
-    "cordova-plugin-whitelist": "1.3.4"
+    "cordova-custom-config": "5.1.1",
+    "cordova-plugin-android-permissions": "1.1.5",
+    "cordova-plugin-device": "3.0.0",
+    "cordova.plugins.diagnostic": "7.2.8"
   }
 }

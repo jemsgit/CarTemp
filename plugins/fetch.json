@@ -1,24 +1,40 @@
 {
-  "cordova-plugin-whitelist": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-whitelist@1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-webpack": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-webpack"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-bluetooth-serial": {
     "source": {
       "type": "registry",
       "id": "cordova-plugin-bluetooth-serial"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-custom-config": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-custom-config"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-android-permissions": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-android-permissions"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device@3.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova.plugins.diagnostic": {
+    "source": {
+      "type": "registry",
+      "id": "cordova.plugins.diagnostic"
     },
     "is_top_level": true,
     "variables": {}

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Gradle startup script for Linux/Unix
+
+# Define the wrapper properties file
+WRAPPER_PROPERTIES_FILE="gradle/wrapper/gradle-wrapper.properties"
+
+# Check if the wrapper properties file exists
+if [ ! -f "$WRAPPER_PROPERTIES_FILE" ]; then
+    echo "Could not find gradle wrapper properties file: $WRAPPER_PROPERTIES_FILE"
+    exit 1
+fi
+
+# Extract the distribution URL from the properties file
+DISTRIBUTION_URL=$(grep "^distributionUrl" "$WRAPPER_PROPERTIES_FILE" | cut -d'=' -f2-)
+# The URL is already properly formatted, just need to replace the escaped colon
+DISTRIBUTION_URL=$(echo "$DISTRIBUTION_URL" | sed 's|\\:|:|g')
+
+# Define the expected location of the wrapper JAR
+WRAPPER_JAR="gradle/wrapper/gradle-wrapper.jar"
+
+# If the wrapper JAR doesn't exist, we need to download it
+if [ ! -f "$WRAPPER_JAR" ]; then
+    echo "Gradle wrapper JAR not found. Please open this project in Android Studio to download the wrapper files."
+    echo "Android Studio will automatically download the required Gradle distribution."
+    exit 1
+fi
+
+# Execute the gradle wrapper
+exec java -jar "$WRAPPER_JAR" "$@"

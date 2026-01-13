@@ -10,7 +10,7 @@
     {
       "src": "res/icon.png",
       "type": "image/png",
-      "sizes": "57x57"
+      "sizes": "undefinedxundefined"
     }
   ],
   "start_url": "index.html"

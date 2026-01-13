@@ -13,7 +13,38 @@ var cordovaApp = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
+    onDeviceReady: async function() {
+        // Initialize permissions plugin if available
+        if (cordova.plugins && cordova.plugins.permissions) {
+            console.log('Permissions plugin available');
+
+            // Check if device object is available (not available in browser)
+            if (typeof device !== 'undefined' && device.platform && device.version) {
+                // Request Bluetooth permissions on startup for Android 12+
+                if (device.platform.toLowerCase() === 'android' && parseInt(device.version) >= 12) {
+                    try {
+                        console.log('Requesting Bluetooth permissions for Android ' + device.version);
+                        await bluetoothService.requestBluetoothPermissions();
+                        console.log('Bluetooth permissions handled successfully');
+                    } catch (error) {
+                        console.error('Error requesting Bluetooth permissions:', error);
+                        // Show a user-friendly message about permissions
+                        // Using setTimeout to ensure DOM is ready
+                        setTimeout(() => {
+                            alert('Для работы приложения необходимо разрешение на использование Bluetooth. Пожалуйста, предоставьте его в настройках приложения.');
+                        }, 1000);
+                    }
+                } else {
+                    console.log('Android version < 12, using legacy permissions');
+                }
+            } else {
+                console.log('Device info not available (running in browser)');
+            }
+        } else {
+            console.log('Permissions plugin not available');
+            // Still create the Vue app even if permissions plugin is not available
+        }
+
         createVueApp();
     },
   };
@@ -33,6 +64,7 @@ function createVueApp() {
                 devices: [],
                 showList: true,
                 showContent: false,
+                showPermissionMessage: false, // Добавляем переменную для отображения сообщения о разрешениях
                 temp: null,
                 debug: '',
                 customCommand: '',
@@ -43,10 +75,43 @@ function createVueApp() {
             async getDeviceList() {
                 try{
                     this.devices = [];
+                    // Show permission message before attempting to get devices
+                    this.showPermissionMessage = true;
+
+                    // On Android 12+, we need to ensure permissions are granted before scanning
+                    if (cordova?.platformId === 'android' && typeof device !== 'undefined' && device.version) {
+                        const androidVersion = parseFloat(device.version);
+                        if (androidVersion >= 12) {
+                            await bluetoothService.requestBluetoothPermissions();
+                        }
+                    }
+
                     let devices = await bluetoothService.getDevices();
                     this.devices = devices;
+                    // Hide permission message after successful retrieval
+                    this.showPermissionMessage = false;
                 } catch(e) {
                     console.log(e);
+                    // Show user-friendly error message for permission issues
+                    if (e.message && (e.message.includes('Permission') || e.message.includes('permission'))) {
+                        this.updateLog('Bluetooth permission denied. Please enable Bluetooth permissions in app settings.');
+                        // Show the permission message again if permission was denied
+                        this.showPermissionMessage = true;
+                        // Prompt user to go to settings
+                        setTimeout(() => {
+                            if (cordova.plugins.diagnostic) {
+                                cordova.plugins.diagnostic.switchToSettings(() => {
+                                    console.log("Switched to settings");
+                                }, (error) => {
+                                    console.log("Error opening settings: " + error);
+                                });
+                            }
+                        }, 2000);
+                    } else {
+                        this.updateLog('Error getting devices: ' + e.message);
+                        // Hide the permission message for non-permission errors
+                        this.showPermissionMessage = false;
+                    }
                 }
             },
             async selectDevice(device) {
@@ -54,6 +119,14 @@ function createVueApp() {
                     this.updateLog(device)
                     // Stop any existing monitoring before reconnecting
                     this.stopMonitoring();
+
+                    // Ensure permissions are granted before connecting
+                    if (cordova?.platformId === 'android' && typeof device !== 'undefined' && device.version) {
+                        const androidVersion = parseFloat(device.version);
+                        if (androidVersion >= 12) {
+                            await bluetoothService.requestBluetoothPermissions();
+                        }
+                    }
 
                     let connected = await bluetoothService.connectToDevice(device.id);
                     if(connected) {
@@ -70,6 +143,22 @@ function createVueApp() {
                 } catch(e) {
                     this.updateLog('connect failed');
                     console.log(e);
+                    // Show user-friendly error message for permission issues
+                    if (e.message && (e.message.includes('Permission') || e.message.includes('permission'))) {
+                        this.updateLog('Bluetooth permission denied. Please enable Bluetooth permissions in app settings.');
+                        // Prompt user to go to settings
+                        setTimeout(() => {
+                            if (cordova.plugins.diagnostic) {
+                                cordova.plugins.diagnostic.switchToSettings(() => {
+                                    console.log("Switched to settings");
+                                }, (error) => {
+                                    console.log("Error opening settings: " + error);
+                                });
+                            }
+                        }, 2000);
+                    } else {
+                        this.updateLog('Connection error: ' + e.message);
+                    }
                 }
             },
             startMonitoring() {

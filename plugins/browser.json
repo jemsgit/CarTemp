@@ -10,10 +10,16 @@
     "cordova-plugin-bluetooth-serial": {
       "PACKAGE_NAME": "com.example.cartemp"
     },
-    "cordova-plugin-webpack": {
+    "cordova-custom-config": {
       "PACKAGE_NAME": "com.example.cartemp"
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova.plugins.diagnostic": {
       "PACKAGE_NAME": "com.example.cartemp"
     }
   },

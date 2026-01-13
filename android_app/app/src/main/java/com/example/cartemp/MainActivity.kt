@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -88,9 +89,11 @@ class MainActivity : AppCompatActivity() {
                 val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, deviceNames)
                 deviceList.adapter = adapter
 
-                deviceList.onItemClickListener = { _, _, position, _ ->
-                    val selectedDevice = devices[position]
-                    connectToDevice(selectedDevice.address)
+                deviceList.onItemClickListener = object : AdapterView.OnItemClickListener {
+                    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                        val selectedDevice = devices[position]
+                        connectToDevice(selectedDevice.address)
+                    }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading paired devices", e)

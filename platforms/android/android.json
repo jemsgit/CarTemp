@@ -5,25 +5,13 @@
   },
   "config_munge": {
     "files": {
-      "res/xml/config.xml": {
-        "parents": {
-          "/*": [
-            {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            }
-          ],
-          "/widget": [
-            {
-              "xml": "<feature name=\"BluetoothSerial\"><param name=\"android-package\" value=\"com.megster.cordova.BluetoothSerial\" /></feature>",
-              "count": 1
-            }
-          ]
-        }
-      },
       "AndroidManifest.xml": {
         "parents": {
           "/manifest": [
+            {
+              "xml": "<uses-sdk android:minSdkVersion=\"23\" android:targetSdkVersion=\"35\" />",
+              "count": 17
+            },
             {
               "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH\" />",
               "count": 1
@@ -35,6 +23,82 @@
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
               "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_SCAN\" android:usesPermissionFlags=\"neverForLocation\" />",
+              "count": 5
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_CONNECT\" />",
+              "count": 5
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+              "count": 4
+            }
+          ],
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH\" />",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "res/xml/config.xml": {
+        "parents": {
+          "/widget": [
+            {
+              "xml": "<feature name=\"BluetoothSerial\"><param name=\"android-package\" value=\"com.megster.cordova.BluetoothSerial\" /></feature>",
+              "count": 1
+            }
+          ],
+          "/*": [
+            {
+              "xml": "<feature name=\"Permissions\"><param name=\"android-package\" value=\"com.android.plugins.Permissions\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Diagnostic\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_Location\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_Location\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_Bluetooth\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_Bluetooth\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_Wifi\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_Wifi\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_Camera\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_Camera\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_Notifications\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_Notifications\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_NFC\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_NFC\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Diagnostic_External_Storage\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic_External_Storage\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -42,13 +106,21 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.example.cartemp"
-    },
-    "cordova-plugin-webpack": {
-      "PACKAGE_NAME": "com.example.cartemp"
-    },
     "cordova-plugin-bluetooth-serial": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.example.cartemp"
+    },
+    "cordova.plugins.diagnostic": {
+      "ANDROIDX_VERSION": "1.0.0",
+      "ANDROIDX_APPCOMPAT_VERSION": "1.3.1",
       "PACKAGE_NAME": "com.example.cartemp"
     }
   },
@@ -61,11 +133,117 @@
       "clobbers": [
         "window.bluetoothSerial"
       ]
+    },
+    {
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+      "pluginId": "cordova-plugin-android-permissions",
+      "clobbers": [
+        "cordova.plugins.permissions"
+      ]
+    },
+    {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Location",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.location.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.location"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Bluetooth",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.bluetooth.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.bluetooth"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Wifi",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.wifi.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.wifi"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Camera",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.camera.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.camera"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Notifications",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.notifications.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.notifications"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Microphone",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.microphone.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.microphone"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Contacts",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.contacts.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.contacts"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_Calendar",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.calendar.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.calendar"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_NFC",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.nfc.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.nfc"
+      ]
+    },
+    {
+      "id": "cordova.plugins.diagnostic.Diagnostic_External_Storage",
+      "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.external_storage.js",
+      "pluginId": "cordova.plugins.diagnostic",
+      "merges": [
+        "cordova.plugins.diagnostic.external_storage"
+      ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.4",
-    "cordova-plugin-webpack": "0.4.7",
-    "cordova-plugin-bluetooth-serial": "0.4.7"
+    "cordova-plugin-bluetooth-serial": "0.4.7",
+    "cordova-custom-config": "5.1.1",
+    "cordova-plugin-android-permissions": "1.1.5",
+    "cordova-plugin-device": "3.0.0",
+    "cordova.plugins.diagnostic": "7.2.8"
   }
 }
