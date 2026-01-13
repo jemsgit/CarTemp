@@ -126,12 +126,12 @@ body {
 }
 
 .content__button.disconnect {
-    background: linear-gradient(45deg, #ff5252, #ff7676);
+    background: #6AC6E9;
     box-shadow: 0 4px 10px rgba(255, 82, 82, 0.3);
 }
 
 .content__button.disconnect:hover {
-    background: linear-gradient(45deg, #ff7676, #ff9a9a);
+    background: #6AC6E9;
     box-shadow: 0 6px 15px rgba(255, 82, 82, 0.4);
 }
 
