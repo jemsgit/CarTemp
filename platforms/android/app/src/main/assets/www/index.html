@@ -12,24 +12,26 @@
     <body>
         <div id="app">
             <div v-if="showList" class="device-list-container">
-                <h2 class="device-list__title">Bluetooth OBD Devices</h2>
+                <div>
+                    <h2 class="device-list__title">Bluetooth OBD Devices</h2>
 
-                <!-- Message about permissions -->
-                <div v-if="showPermissionMessage" class="permission-message">
-                    <span v-if="isLoading" class="loading"></span>
-                    Please allow Bluetooth permissions to scan for devices
-                </div>
+                    <!-- Message about permissions -->
+                    <div v-if="showPermissionMessage" class="permission-message">
+                        <span v-if="isLoading" class="loading"></span>
+                        Please allow Bluetooth permissions to scan for devices
+                    </div>
 
-                <div class="device-list">
-                    <ul>
-                        <li
-                            v-for="device in devices"
-                            v-on:click="selectDevice(device)"
-                            class="device-list__item">
-                            <strong>{{ device.name || 'Unknown Device' }}</strong><br>
-                            <small>{{ device.id }}</small>
-                        </li>
-                    </ul>
+                    <div class="device-list">
+                        <ul>
+                            <li
+                                v-for="device in devices"
+                                v-on:click="selectDevice(device)"
+                                class="device-list__item">
+                                <strong>{{ device.name || 'Unknown Device' }}</strong><br>
+                                <small>{{ device.id }}</small>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <button v-on:click="onRefresh" class="content__button refresh-btn">
@@ -49,6 +51,13 @@
                     Disconnect
                 </button>
 
+                
+            </div>
+
+            <div class="debug">
+                <p>
+                    {{ debug }}
+                </p>
                 <div class="custom-command-section">
                     <input
                         type="text"
@@ -57,16 +66,7 @@
                         class="custom-command"
                         v-on:keyup.enter="sendCustomCommand"
                     >
-                    <button v-on:click="sendCustomCommand" class="content__button">Send</button>
-                </div>
-            </div>
-
-            <div class="debug">
-                <p>
-                    {{ debug }}
-                </p>
-                <div class="debug-form">
-                    <a href="#" v-on:click.prevent="onRefresh" class="refresh-link">Refresh</a>
+                    <button v-on:click="sendCustomCommand" class="send__button">Send</button>
                 </div>
             </div>
         </div>
