@@ -10,7 +10,7 @@
           "/manifest": [
             {
               "xml": "<uses-sdk android:minSdkVersion=\"23\" android:targetSdkVersion=\"35\" />",
-              "count": 21
+              "count": 25
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH\" />",
@@ -26,15 +26,15 @@
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_SCAN\" android:usesPermissionFlags=\"neverForLocation\" />",
-              "count": 9
+              "count": 13
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_CONNECT\" />",
-              "count": 9
+              "count": 13
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-              "count": 8
+              "count": 12
             }
           ],
           "/*": [

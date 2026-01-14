@@ -69,7 +69,8 @@ function createVueApp() {
                 debug: '',
                 customCommand: '',
                 deviceId: null,
-                isLoading: false // Add loading state
+                isLoading: false, // Add loading state
+                showDebug: true // Toggle for debug panel visibility
              }
         },
         methods: {
@@ -212,6 +213,9 @@ function createVueApp() {
             async sendCustomCommand() {
                 await bluetoothService.sendData(this.customCommand);
                 this.customCommand = ''
+            },
+            toggleDebug() {
+                this.showDebug = !this.showDebug;
             }
         },
         computed: {

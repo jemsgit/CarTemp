@@ -54,7 +54,7 @@
                 
             </div>
 
-            <div class="debug">
+            <div v-if="showDebug" class="debug">
                 <p>
                     {{ debug }}
                 </p>
@@ -69,6 +69,10 @@
                     <button v-on:click="sendCustomCommand" class="send__button">Send</button>
                 </div>
             </div>
+
+            <button v-on:click="toggleDebug" class="debug-toggle">
+                {{ showDebug ? '▼ Hide Debug' : '▲ Show Debug' }}
+            </button>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="index.bundle.js"></script>

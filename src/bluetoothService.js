@@ -8,130 +8,130 @@ class BluetoothService {
     this.subscriptionActive = false;
   }
 
+  // Helper method to check if bluetoothSerial is available
+  isBluetoothAvailable() {
+    return !!window.bluetoothSerial;
+  }
+
+  // Helper method to check if running in Cordova environment
+  isCordovaEnvironment() {
+    return !!window.cordova;
+  }
+
   async requestBluetoothPermissions() {
-    return new Promise(async (resolve, reject) => {
-      // Check if running in browser or without Cordova
-      if (!window.cordova) {
-        resolve(true); // Browser environment doesn't need permissions
-        return;
-      }
+    // Check if running in browser or without Cordova
+    if (!this.isCordovaEnvironment()) {
+      return true; // Browser environment doesn't need permissions
+    }
 
-      // Check if device object is available
-      if (
-        typeof device === "undefined" ||
-        !device.platform ||
-        !device.version
-      ) {
-        console.warn(
-          "Device info not available, assuming non-Android platform"
-        );
-        resolve(true);
-        return;
-      }
+    // Check if device object is available
+    if (
+      typeof device === "undefined" ||
+      !device?.platform ||
+      !device?.version
+    ) {
+      console.warn(
+        "Device info not available, assuming non-Android platform"
+      );
+      return true;
+    }
 
-      const androidVersion = parseFloat(device.version);
+    const androidVersion = parseFloat(device.version);
 
-      // For Android 12+ (including Android 14), we need specific permissions
-      if (androidVersion >= 12) {
-        // Check if permissions plugin is available
-        if (!window.cordova.plugins || !window.cordova.plugins.permissions) {
-          console.error("Permissions plugin not available");
-          reject(new Error("Permissions plugin not available"));
-          return;
-        }
+    // For Android versions below 12, permissions are granted automatically
+    if (androidVersion < 12) {
+      console.log("Older Android version, permissions handled automatically");
+      return true;
+    }
 
-        const permissions = window.cordova.plugins.permissions;
+    // Check if permissions plugin is available
+    const permissions = window.cordova?.plugins?.permissions;
+    if (!permissions) {
+      throw new Error("Permissions plugin not available");
+    }
 
-        // Android 14 requires these specific permissions for Bluetooth
-        let bluetoothPermissions = [
-          permissions.BLUETOOTH_CONNECT,
-          permissions.BLUETOOTH_SCAN,
-        ];
+    // Android 12+ requires specific permissions for Bluetooth
+    const bluetoothPermissions = [
+      permissions.BLUETOOTH_CONNECT,
+      permissions.BLUETOOTH_SCAN,
+    ];
 
-        // For Android 14, we might also need location permissions for Bluetooth discovery
-        if (androidVersion >= 14) {
-          bluetoothPermissions.push(permissions.ACCESS_FINE_LOCATION);
-        }
+    // Android 14+ also needs location permissions for Bluetooth discovery
+    if (androidVersion >= 14) {
+      bluetoothPermissions.push(permissions.ACCESS_FINE_LOCATION);
+    }
 
-        // Request permissions
-        permissions.requestPermissions(
-          bluetoothPermissions,
-          (status) => {
-            const allGranted = bluetoothPermissions.every((permission) => {
-              // Handle different permission formats
-              if (typeof permission === "string") {
-                // If permission is a string, check direct
-                return (
-                  status.hasPermission ||
-                  status[permission] ||
-                  status.hasPermission === true
-                );
-              } else {
-                // If permission is a constant from the plugin
-                return (
-                  status.hasPermission[permission] ||
-                  status.hasPermission === true
-                );
-              }
-            });
-
-            if (allGranted) {
-              console.log("All Bluetooth permissions granted");
-              resolve(true);
-            } else {
-              console.error("Not all Bluetooth permissions granted", status);
-              reject(new Error("Not all Bluetooth permissions granted"));
+    // Request permissions using promisified approach
+    return new Promise((resolve, reject) => {
+      permissions.requestPermissions(
+        bluetoothPermissions,
+        (status) => {
+          const allGranted = bluetoothPermissions.every((permission) => {
+            // Handle different permission formats
+            if (typeof permission === "string") {
+              return (
+                status.hasPermission ||
+                status[permission] ||
+                status.hasPermission === true
+              );
             }
-          },
-          (err) => {
-            console.error("Error requesting permissions:", err);
-            reject(
-              new Error(
-                "Error requesting Bluetooth permissions: " + err.message
-              )
+            return (
+              status.hasPermission?.[permission] ||
+              status.hasPermission === true
             );
+          });
+
+          if (allGranted) {
+            console.log("All Bluetooth permissions granted");
+            resolve(true);
+          } else {
+            console.error("Not all Bluetooth permissions granted", status);
+            reject(new Error("Not all Bluetooth permissions granted"));
           }
-        );
-      } else {
-        // For older Android versions, Bluetooth permissions are granted automatically
-        console.log("Older Android version, permissions handled automatically");
-        resolve(true);
-      }
+        },
+        (err) => {
+          console.error("Error requesting permissions:", err);
+          reject(
+            new Error(
+              `Error requesting Bluetooth permissions: ${err?.message || err}`
+            )
+          );
+        }
+      );
     });
   }
 
   async getDevices() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+    if (!this.isBluetoothAvailable()) {
       console.warn("Bluetooth serial not available in browser environment");
       return [];
     }
 
     try {
       // Request permissions before attempting to get devices
-      if (cordova?.platformId === "android") {
+      if (window.cordova?.platformId === "android") {
         await this.requestBluetoothPermissions();
       }
-      return await this.promisify(bluetoothSerial.list.bind(bluetoothSerial));
+      return await this.promisify(() =>
+        window.bluetoothSerial.list.bind(window.bluetoothSerial)
+      );
     } catch (error) {
       console.error("Error getting devices:", error);
-      // Re-throw the error to be handled by the calling function
       throw error;
     }
   }
 
   async connectToDevice(uuid) {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+    if (!this.isBluetoothAvailable()) {
       console.warn("Bluetooth serial not available in browser environment");
       return false;
     }
 
-    this.debug("connecting to " + uuid);
-    let result = false;
+    this.debug(`Connecting to ${uuid}`);
+
     try {
       // Request permissions before attempting to connect
-      if (cordova?.platformId === "android") {
+      if (window.cordova?.platformId === "android") {
         await this.requestBluetoothPermissions();
       }
 
@@ -140,88 +140,130 @@ class BluetoothService {
         await this.disconnect();
       }
 
-      await this.promisify(bluetoothSerial.connect.bind(bluetoothSerial, uuid));
+      await this.promisify(() =>
+        window.bluetoothSerial.connect.bind(window.bluetoothSerial, uuid)
+      );
+
       this.deviceId = uuid;
-      result = true;
-      console.log("connected");
-    } catch (e) {
-      console.log("error connect", e);
-      // Check if the error is related to permissions and re-throw for UI handling
-      if (
-        e.message &&
-        (e.message.includes("Permission") || e.message.includes("permission"))
-      ) {
-        throw e;
+      console.log(`Connected to device ${uuid}`);
+      return true;
+    } catch (error) {
+      console.error("Error connecting to device:", error);
+
+      // Re-throw permission-related errors for UI handling
+      if (error?.message?.toLowerCase().includes("permission")) {
+        throw error;
       }
-      result = false;
+
+      return false;
     }
-    return result;
   }
 
   async disconnect() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
-      console.warn("Bluetooth serial not available in browser environment");
+    // Reset state even if bluetooth is not available
+    const resetState = () => {
       this.deviceId = null;
       this.incomingMessage = null;
       this.error = null;
+      this.subscriptionActive = false;
+    };
+
+    if (!this.isBluetoothAvailable()) {
+      console.warn("Bluetooth serial not available in browser environment");
+      resetState();
       return;
     }
 
-    if (this.subscriptionActive) {
-      await this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial));
-      this.subscriptionActive = false;
+    try {
+      if (this.subscriptionActive) {
+        await this.promisify(() =>
+          window.bluetoothSerial.unsubscribe.bind(window.bluetoothSerial)
+        );
+      }
+
+      await this.promisify(() =>
+        window.bluetoothSerial.disconnect.bind(window.bluetoothSerial)
+      );
+
+      console.log("Disconnected successfully");
+    } catch (error) {
+      console.error("Error during disconnect:", error);
+    } finally {
+      resetState();
     }
-    await this.promisify(bluetoothSerial.disconnect.bind(bluetoothSerial));
-    this.deviceId = null;
-    this.incomingMessage = null; // Reset incoming message buffer
-    this.error = null; // Reset error state
   }
 
   async initElm() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+    if (!this.isBluetoothAvailable()) {
       console.warn("Bluetooth serial not available in browser environment");
       return false;
     }
 
     if (!this.deviceId) {
-      this.debug("no device id");
+      this.debug("No device ID set");
       return false;
     }
 
-    // Clear any previous message before starting initialization
-    this.incomingMessage = null;
+    try {
+      // Clear any previous message before starting initialization
+      this.incomingMessage = null;
 
-    let answer;
-    this.listen();
-    await this.sendData("ATZ");
-    answer = await this.getAnswer();
-    await this.sendData("ATSP0");
-    answer = await this.getAnswer();
-    await this.sendData("0100");
-    answer = await this.getAnswer();
-    while (!answer.match(this.regex)) {
-      answer = await this.getAnswer();
+      this.listen();
+
+      // Reset ELM327
+      await this.sendData("ATZ");
+      await this.getAnswer();
+
+      // Set protocol to auto
+      await this.sendData("ATSP0");
+      await this.getAnswer();
+
+      // Get supported PIDs
+      await this.sendData("0100");
+      let answer = await this.getAnswer();
+
+      // Wait for valid response matching expected format
+      let attempts = 0;
+      const maxAttempts = 5;
+
+      while (!answer.match(this.regex) && attempts < maxAttempts) {
+        answer = await this.getAnswer();
+        attempts++;
+      }
+
+      if (attempts >= maxAttempts) {
+        throw new Error("Failed to initialize ELM327: No valid response");
+      }
+
+      console.log("ELM327 initialized successfully");
+      return true;
+    } catch (error) {
+      console.error("Error initializing ELM327:", error);
+      return false;
     }
   }
 
   async getTemperature() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+    if (!this.isBluetoothAvailable()) {
       console.warn("Bluetooth serial not available in browser environment");
       return null;
     }
 
     try {
+      // PID 0105 is for engine coolant temperature
       await this.sendData("0105");
-      let temp = await this.getAnswer();
-      if (temp) {
-        temp = temp.replace(">", "").trim().split(" ");
-        temp = temp[temp.length - 1];
-        return temp;
+      const response = await this.getAnswer();
+
+      if (!response) {
+        return null;
       }
-      return null;
+
+      // Parse temperature from response
+      // Response format: "41 05 XX" where XX is temp value
+      const parts = response.replace(">", "").trim().split(" ");
+      const tempHex = parts[parts.length - 1];
+
+      return tempHex;
     } catch (error) {
       console.error("Error getting temperature:", error);
       return null;
@@ -229,46 +271,48 @@ class BluetoothService {
   }
 
   async sendData(data) {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
-      console.warn("Bluetooth serial not available in browser environment");
-      return Promise.reject(new Error("Bluetooth serial not available"));
+    if (!this.isBluetoothAvailable()) {
+      throw new Error("Bluetooth serial not available");
     }
 
-    this.debug(">" + data + "\r\n");
-    return await this.promisify(
-      bluetoothSerial.write.bind(bluetoothSerial, data + "\r\n")
+    this.debug(`> ${data}`);
+    return await this.promisify(() =>
+      window.bluetoothSerial.write.bind(window.bluetoothSerial, `${data}\r\n`)
     );
   }
 
-  listen() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+  async listen() {
+    if (!this.isBluetoothAvailable()) {
       console.warn("Bluetooth serial not available in browser environment");
       return;
     }
 
     // Unsubscribe first if already subscribed to prevent multiple subscriptions
     if (this.subscriptionActive) {
-      this.promisify(bluetoothSerial.unsubscribe.bind(bluetoothSerial))
-        .then(() => {
-          this.subscriptionActive = false;
-        })
-        .catch(() => {
-          // Even if unsubscribe fails, continue with fresh subscription
-          this.subscriptionActive = false;
-        });
+      try {
+        await this.promisify(() =>
+          window.bluetoothSerial.unsubscribe.bind(window.bluetoothSerial)
+        );
+      } catch (error) {
+        console.warn("Failed to unsubscribe:", error);
+      } finally {
+        this.subscriptionActive = false;
+      }
     }
 
-    bluetoothSerial.subscribe(
+    // Clear any pending messages/errors
+    this.incomingMessage = null;
+    this.error = null;
+
+    window.bluetoothSerial.subscribe(
       ">",
       (data) => {
-        this.debug("listen " + data);
-        console.log(data);
+        this.debug(`< ${data}`);
+        console.log("Received data:", data);
         this.incomingMessage = data;
       },
       (error) => {
-        console.log("subscription error", error);
+        console.error("Subscription error:", error);
         this.error = error;
         this.subscriptionActive = false;
       }
@@ -277,57 +321,58 @@ class BluetoothService {
     this.subscriptionActive = true;
   }
 
-  async getAnswer() {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
-      console.warn("Bluetooth serial not available in browser environment");
-      return Promise.reject(new Error("Bluetooth serial not available"));
+  async getAnswer(timeoutMs = 5000) {
+    if (!this.isBluetoothAvailable()) {
+      throw new Error("Bluetooth serial not available");
     }
 
-    return new Promise((res, rej) => {
-      let startTime = Date.now();
-      const timeout = 5000; // 5 second timeout
+    return new Promise((resolve, reject) => {
+      const startTime = Date.now();
+      const pollInterval = 100; // Poll every 100ms instead of 200ms for better responsiveness
 
-      let intId = setInterval(() => {
+      const intervalId = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+
         if (this.incomingMessage) {
-          res(this.incomingMessage);
-          this.debug("<<" + this.incomingMessage);
+          const message = this.incomingMessage;
+          this.debug(`<< ${message}`);
           this.incomingMessage = null;
-          clearInterval(intId);
+          clearInterval(intervalId);
+          resolve(message);
         } else if (this.error) {
-          rej(this.error);
-          this.debug("<<" + this.error);
+          const error = this.error;
+          this.debug(`<< Error: ${error}`);
           this.error = null;
-          clearInterval(intId);
-        } else if (Date.now() - startTime > timeout) {
-          // Timeout reached, reject the promise
-          rej(new Error("Timeout waiting for response"));
-          clearInterval(intId);
+          clearInterval(intervalId);
+          reject(error);
+        } else if (elapsed > timeoutMs) {
+          clearInterval(intervalId);
+          reject(new Error(`Timeout waiting for response (${timeoutMs}ms)`));
         }
-      }, 200);
+      }, pollInterval);
     });
   }
 
   setDebug(callback) {
-    this.debug = callback;
+    if (typeof callback === "function") {
+      this.debug = callback;
+    } else {
+      console.warn("setDebug expects a function");
+    }
   }
 
-  promisify(action) {
-    // Check if bluetoothSerial is available (not in browser)
-    if (!window.bluetoothSerial) {
+  promisify(actionFactory) {
+    if (!this.isBluetoothAvailable()) {
       return Promise.reject(
         new Error("Bluetooth serial not available in browser environment")
       );
     }
 
     return new Promise((resolve, reject) => {
+      const action = actionFactory();
       action(
-        (data) => {
-          resolve(data);
-        },
-        (err) => {
-          reject(err);
-        }
+        (data) => resolve(data),
+        (error) => reject(error)
       );
     });
   }
